@@ -9,6 +9,8 @@
 The demo repository shows two projects which contain the same classes and tests.
 The tests are not doing anything useful, just waiting for 500 to 1_000ms.
 
+The blog post this demo was made for is: link:https://blog.bmarwell.de/2025/04/24/feed-daemon-faster-builds-maven-reactor-modules-snailtorocket.html?mtm_campaign=snailtorocket-social&mtm_source=twitter&mtm_placement=readme[Feed the Daemon: Faster Builds with Maven Reactor Modules #SnailToRocket @ Ben's Build Notes].
+
 toc::[]
 
 == Introduction
