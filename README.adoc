@@ -85,5 +85,7 @@ m|{set:cellbgcolor:green}{nbsp}5.5s
 
 The moment you have at least a few non-parallelizable tests (which is common), you will start to see a big gain.
 
+Here is a screenshot of the results (may or may not be up to date):
 
+image::/.github/assets/2025-04-25T103048_screenshot.png[]
 
