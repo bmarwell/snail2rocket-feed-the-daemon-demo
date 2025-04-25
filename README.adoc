@@ -1,5 +1,4 @@
 = Demo 4: Feeding the Maven Daemon by architectural restructuring
-
 :toc: macro
 :idprefix:
 :icons: font
@@ -85,7 +84,13 @@ m|{set:cellbgcolor:green}{nbsp}5.5s
 
 The moment you have at least a few non-parallelizable tests (which is common), you will start to see a big gain.
 
+=== Execution results (Screenshots)
+
 Here is a screenshot of the results (may or may not be up to date):
 
+.Original tests with `Thread.sleep()` in test methods:
 image::/.github/assets/2025-04-25T103048_screenshot.png[]
+
+.New execution with `Thread.sleep()` in prod methods and multiple tests:
+image::/.github/assets/2025-04-25T111148_screenshot.png[]
 

@@ -16,7 +16,7 @@ class MpHealthServiceTest {
     @Test
     void test_down() {
         final GitHubService gitHubService = mock(GitHubService.class);
-        when(gitHubService.queryRepositories("snailspace")).thenReturn(Collections.emptyList());
+        when(gitHubService.queryRepositories("snailspace")).thenReturn(List.of());
         final MpHealthService service = new MpHealthService();
         service.setGitHubService(gitHubService);
 
