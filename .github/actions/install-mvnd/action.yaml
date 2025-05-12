@@ -1,0 +1,80 @@
+#
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+name: 'install-mvnd'
+description: 'Install the Maven Daemon'
+inputs:
+  version:
+    description: 'The version of the Maven Daemon to install'
+    required: true
+    default: '1.0.2'
+  distribution:
+    description: 'The Maven distribution to use'
+    required: true
+    default: 'linux-amd64'
+  dry-run:
+    description: 'Flag to enable to the dry-run mode'
+    required: true
+    default: 'false'
+outputs:
+  mvnd-dir:
+    description: "The directory where the command mvnd is located"
+    value: ${{ steps.mvnd-location.outputs.mvnd-dir }}
+runs:
+  using: "composite"
+  steps:
+    - run: |
+        curl \
+          --connect-timeout 5 \
+          --retry 5 \
+          --retry-delay 1 \
+          --retry-max-time 40 \
+          --silent \
+          --show-error \
+          --location \
+          --fail-with-body \
+          --output mvnd.tar.gz \
+          "https://github.com/apache/maven-mvnd/releases/download/${{ inputs.version }}/maven-mvnd-${{ inputs.version }}-${{ inputs.distribution }}.tar.gz"
+      if: inputs.dry-run == 'false'
+      shell: bash
+    - run: |
+        curl \
+          --connect-timeout 5 \
+          --retry 5 \
+          --retry-delay 1 \
+          --retry-max-time 40 \
+          --silent \
+          --show-error \
+          --location \
+          --fail-with-body \
+          --output mvnd.tar.gz.sha256 \
+          "https://github.com/apache/maven-mvnd/releases/download/${{ inputs.version }}/maven-mvnd-${{ inputs.version }}-${{ inputs.distribution }}.tar.gz.sha256"
+      if: inputs.dry-run == 'false'
+      shell: bash
+    - id: integrity-check
+      run: echo "$(cat mvnd.tar.gz.sha256) mvnd.tar.gz" | sha256sum --check
+      if: inputs.dry-run == 'false'
+      shell: bash
+    - run: tar xvf mvnd.tar.gz -C /tmp/
+      if: inputs.dry-run == 'false'
+      shell: bash
+    - id: mvnd-location
+      run: echo "mvnd-dir=/tmp/maven-mvnd-${{ inputs.version }}-${{ inputs.distribution }}/bin" >> $GITHUB_OUTPUT
+      shell: bash
+    - id: mvnd-opts
+      run: echo "MVND_OPTS=-V -e -ntp -Dmvnd.threads=6 -Daether.connector.http.connectionMaxTtl=120 -Daether.connector.requestTimeout=300000 -Daether.dependencyCollector.impl=bf -Dmaven.artifact.threads=25 -Dci.env.name=github.com" >> $GITHUB_ENV
+      shell: bash
