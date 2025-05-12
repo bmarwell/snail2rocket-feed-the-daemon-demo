@@ -11,6 +11,12 @@
       "enabled": false
     },
     {
+      "matchPackageNames": [
+        "^de\\.bmarwell\\.snailspace\\.demo4:.*"
+      ],
+      "enabled": false
+    },
+    {
       "automerge": true,
       "automergeType": "pr",
       "matchPackageNames": [
