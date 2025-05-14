@@ -18,6 +18,8 @@
     <method.timeout>100</method.timeout>
 
     <hibernate.version>6.1.7.Final</hibernate.version>
+
+    <argLine/>
   </properties>
 
   <modules>
@@ -144,13 +146,14 @@
 
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>3.8.1</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>3.5.3</version>
-          <configuration>
-            <systemPropertyVariables>
-              <method.timeout>${method.timeout}</method.timeout>
-            </systemPropertyVariables>
-          </configuration>
         </plugin>
 
         <plugin>
@@ -208,6 +211,32 @@
         </plugin>
       </plugins>
     </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <inherited>true</inherited>
+        <executions>
+          <execution>
+            <goals>
+              <goal>properties</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <argLine>@{argLine} -javaagent:${org.mockito:mockito-core:jar}</argLine>
+          <systemPropertyVariables>
+            <method.timeout>${method.timeout}</method.timeout>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
 
   <profiles>
