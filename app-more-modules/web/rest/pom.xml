@@ -32,6 +32,12 @@
 
     <dependency>
       <groupId>de.bmarwell.snailspace.demo4</groupId>
+      <artifactId>app-modularized-common-randomid</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>de.bmarwell.snailspace.demo4</groupId>
       <artifactId>app-modularized-services-api</artifactId>
       <version>1.0.0-SNAPSHOT</version>
     </dependency>

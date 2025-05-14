@@ -6,21 +6,13 @@
 
   <parent>
     <groupId>de.bmarwell.snailspace.demo4</groupId>
-    <artifactId>app-modularized</artifactId>
+    <artifactId>app-modularized-common</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
 
   <groupId>de.bmarwell.snailspace.demo4</groupId>
-  <artifactId>app-modularized-common</artifactId>
+  <artifactId>app-modularized-common-randomid</artifactId>
   <version>1.0.0-SNAPSHOT</version>
-  <packaging>pom</packaging>
-
-  <name>App (modularized) :: common</name>
-
-  <modules>
-    <module>lang</module>
-    <module>value</module>
-    <module>randomid</module>
-  </modules>
+  <name>App (modularized) :: common :: RandomID</name>
 
 </project>
