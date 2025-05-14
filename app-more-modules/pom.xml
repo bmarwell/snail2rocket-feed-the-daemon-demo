@@ -16,6 +16,8 @@
     <maven.compiler.release>${java.version}</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <method.timeout>100</method.timeout>
+
+    <hibernate.version>6.1.7.Final</hibernate.version>
   </properties>
 
   <modules>

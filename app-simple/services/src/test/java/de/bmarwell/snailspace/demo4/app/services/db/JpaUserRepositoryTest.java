@@ -5,15 +5,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 import de.bmarwell.snailspace.demo4.app.common.value.User;
 import de.bmarwell.snailspace.demo4.app.common.value.UserId;
 import java.util.Optional;
-import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
+@ExtendWith(DbTestExtension.class)
 class JpaUserRepositoryTest {
+
+    private JpaUserRepository service;
+
+    @BeforeEach
+    void setUp(JpaUserRepository service) {
+        this.service = service;
+    }
 
     @Test
     void user_by_id_empty() {
-        final JpaUserRepository service = new JpaUserRepository();
-
         // when
         final Optional<User> optionalUser = service.getUserById(new UserId("unknown"));
 
@@ -23,8 +30,6 @@ class JpaUserRepositoryTest {
 
     @Test
     void user_by_id_mthmulders() {
-        final JpaUserRepository service = new JpaUserRepository();
-
         // when
         final Optional<User> optionalUser = service.getUserById(new UserId("mthmulders"));
 
@@ -34,8 +39,6 @@ class JpaUserRepositoryTest {
 
     @Test
     void user_by_id_bmarwell() {
-        final JpaUserRepository service = new JpaUserRepository();
-
         // when
         final Optional<User> optionalUser = service.getUserById(new UserId("bmarwell"));
 
@@ -48,8 +51,6 @@ class JpaUserRepositoryTest {
 
     @Test
     void user_by_name_unknown() {
-        final JpaUserRepository service = new JpaUserRepository();
-
         // when
         final var users = service.getUserByName("unknown");
 
@@ -59,8 +60,6 @@ class JpaUserRepositoryTest {
 
     @Test
     void user_by_name_ben() {
-        final JpaUserRepository service = new JpaUserRepository();
-
         // when
         final var users = service.getUserByName("Ben");
 
@@ -70,8 +69,6 @@ class JpaUserRepositoryTest {
 
     @Test
     void user_by_name_maarten() {
-        final JpaUserRepository service = new JpaUserRepository();
-
         // when
         final var users = service.getUserByName("Maarten");
 
