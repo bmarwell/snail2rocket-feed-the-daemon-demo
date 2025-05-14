@@ -8,10 +8,7 @@ import static org.mockito.Mockito.verify;
 import de.bmarwell.snailspace.demo4.app.common.value.User;
 import de.bmarwell.snailspace.demo4.app.common.value.UserId;
 import java.util.Optional;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 class UserServiceImplTest {
 
@@ -27,7 +24,7 @@ class UserServiceImplTest {
         assertThat(maarten).isNotNull();
     }
 
-    @RepeatedTest(5)
+    @Test
     void get_user_by_id() {
         // given
         final UserServiceImpl userService = spy(new UserServiceImpl());
@@ -44,7 +41,7 @@ class UserServiceImplTest {
         verify(userService, times(1)).doGetUserFromDatabase(mthmulders);
     }
 
-    @RepeatedTest(5)
+    @Test
     void get_unknown_user() {
         // given
         final UserServiceImpl userService = spy(new UserServiceImpl());
