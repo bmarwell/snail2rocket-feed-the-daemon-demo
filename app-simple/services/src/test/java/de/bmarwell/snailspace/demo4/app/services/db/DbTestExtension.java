@@ -20,9 +20,9 @@ public class DbTestExtension implements AfterEachCallback, BeforeEachCallback, P
 
     protected EntityManagerFactory newEntityManagerFactory(String testname) {
         var properties = new ConcurrentHashMap<String, String>();
-        properties.put("jakarta.persistence.jdbc.driver", org.hsqldb.jdbc.JDBCDriver.class.getName());
-        properties.put("jakarta.persistence.jdbc.url", String.format("jdbc:hsqldb:mem:%s", testname));
-        properties.put("jakarta.persistence.jdbc.user", "SA");
+        properties.put("jakarta.persistence.jdbc.driver", org.h2.Driver.class.getName());
+        properties.put("jakarta.persistence.jdbc.url", String.format("jdbc:h2:mem:%s;DB_CLOSE_DELAY=-1", testname));
+        properties.put("jakarta.persistence.jdbc.user", "sa");
 
         properties.put("eclipselink.ddl-generation", "create-tables");
 
