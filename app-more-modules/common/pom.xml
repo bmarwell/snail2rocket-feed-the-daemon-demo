@@ -20,6 +20,7 @@
   <modules>
     <module>lang</module>
     <module>value</module>
+    <module>randomid</module>
   </modules>
 
 </project>

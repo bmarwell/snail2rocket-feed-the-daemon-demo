@@ -3,10 +3,30 @@ package de.bmarwell.snailspace.demo4.app.db.jpa;
 import de.bmarwell.snailspace.demo4.app.common.value.User;
 import de.bmarwell.snailspace.demo4.app.common.value.UserId;
 import de.bmarwell.snailspace.demo4.app.db.api.UserRepository;
+import de.bmarwell.snailspace.demo4.app.db.jpa.mapper.UserMapper;
+import de.bmarwell.snailspace.demo4.app.db.jpa.pdo.UserPdo;
+import de.bmarwell.snailspace.demo4.app.db.jpa.pdo.UserPdo_;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
 
 public class JpaUserRepository implements UserRepository {
+
+    @PersistenceContext
+    EntityManager em;
+
+    public JpaUserRepository() {
+        // cdi
+    }
+
+    public JpaUserRepository(EntityManagerFactory emf) {
+        this.em = emf.createEntityManager();
+    }
 
     @Override
     public Optional<User> getUserById(UserId userId) {
@@ -16,15 +36,14 @@ public class JpaUserRepository implements UserRepository {
             throw new RuntimeException(e);
         }
 
-        if ("bmarwell".equals(userId.value())) {
-            return Optional.of(new User(userId, "Ben"));
-        }
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<UserPdo> query = cb.createQuery(UserPdo.class);
+        Root<UserPdo> from = query.from(UserPdo.class);
+        query.where(
+            cb.equal(from.get(UserPdo_.userId), userId)
+        );
 
-        if ("mthmulders".equals(userId.value())) {
-            return Optional.of(new User(userId, "Maarten"));
-        }
-
-        return Optional.empty();
+        return em.createQuery(query).getResultList().stream().findFirst().map(UserMapper::toDomain);
     }
 
     @Override

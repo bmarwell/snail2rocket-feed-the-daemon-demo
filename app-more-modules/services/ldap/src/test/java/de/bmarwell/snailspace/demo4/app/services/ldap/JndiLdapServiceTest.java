@@ -4,8 +4,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import de.bmarwell.snailspace.demo4.app.common.value.User;
+import de.bmarwell.snailspace.demo4.app.common.value.UserGroup;
 import de.bmarwell.snailspace.demo4.app.common.value.UserId;
+import java.util.List;
 import java.util.Optional;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 class JndiLdapServiceTest {
@@ -48,4 +51,14 @@ class JndiLdapServiceTest {
         assertThat(user.orElseThrow().name()).isEqualTo("Maarten");
     }
 
+    @RepeatedTest(2)
+    void returns_10_groups() {
+        final JndiLdapService service = new JndiLdapService();
+
+        // when
+        List<UserGroup> groups = service.getUserGroupNames(new UserId("mthmulders"));
+
+        // then
+        assertThat(groups).hasSize(10);
+    }
 }
