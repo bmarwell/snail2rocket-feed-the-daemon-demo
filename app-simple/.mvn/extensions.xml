@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<extensions>
+  <extension>
+      <groupId>io.opentelemetry.contrib</groupId>
+      <artifactId>opentelemetry-maven-extension</artifactId>
+      <version>1.49.0-alpha</version>
+  </extension>
+</extensions>
